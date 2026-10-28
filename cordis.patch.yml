@@ -10,5 +10,5 @@
 #     dataDir: D:/somewhere/prompt-deck
 - insert:
     - id: prompt-deck
-      name: '@xgy/dsh-prompt-deck'
+      name: '@xgy-lab/dsh-prompt-deck'
       config: {}

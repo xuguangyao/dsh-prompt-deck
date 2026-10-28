@@ -59,7 +59,7 @@ uses * 10 + recency   // recency = 30 天内的线性衰减，0..1
    npm publish --registry=https://registry.npmjs.org --access public
    ```
 
-   不发 npm 也能被收录，`repository` 字段已经指回仓库，只是市场不显示下载量。发之前确认 npm 上 `@xgy` 这个 scope 属于自己。
+   不发 npm 也能被收录，`repository` 字段已经指回仓库，只是市场不显示下载量。npm 账号是 `xgy-lab`，所以包名用 `@xgy-lab/dsh-prompt-deck` —— scope 必须等于账号名或自己创建的组织名，否则 `npm publish` 会 403。
 4. 把 `awesome-entry.yml` 复制到 awesome-dsh-plugin 仓库的 `data/plugins/xuguangyao__dsh-prompt-deck.yml`（双下划线），提一个只包含这一个文件的 PR。**不要改那两个 README**，它们是脚本生成的，手改会让 CI 报 `READMEs are out of sync`。
 5. 等 CI：条目数 ≤3 → `dsh.bundle` → 仓库满 1 天 → lint 与站点构建。失败会指明改什么，同一分支推修复即可，不用重开 PR。
 

@@ -5,7 +5,7 @@
  * 模块级只注册 factory，不产生任何副作用；所有注册都放在 apply(ctx) 里。
  */
 window.__ModuleLoader__.load({
-  id: '@xgy/dsh-prompt-deck',
+  id: '@xgy-lab/dsh-prompt-deck',
   factory(require) {
     const React = require('react')
     const h = React.createElement

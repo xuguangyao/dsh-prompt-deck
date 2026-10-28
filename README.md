@@ -48,7 +48,7 @@ Windows 上对应 `%USERPROFILE%\.dsh\prompt-deck\snippets.json`。
 ```yaml
 - insert:
     - id: prompt-deck
-      name: '@xgy/dsh-prompt-deck'
+      name: '@xgy-lab/dsh-prompt-deck'
       config:
         dataDir: D:/work/prompt-deck
 ```
