@@ -6,11 +6,14 @@
 #
 # 前提：github.com/xuguangyao/dsh-prompt-deck 已公开，package.json 里有 dsh.bundle，
 # 仓库加了 topic `dsh-plugin`，且仓库创建满 1 天。
+#
+# 不要手写 npm 字段：站点会从 package.json 的 repository 自动关联到
+# @xgy-lab/dsh-prompt-deck，手写 `npm:` 会被校验拒绝。
 
 url: https://github.com/xuguangyao/dsh-prompt-deck
 name: xuguangyao/dsh-prompt-deck
 category: ui
 description:
-  en: Reusable prompt snippets pinned above the composer as one-click capsules; clicking one fills the input, resolving {{variable}} placeholders first.
-  zh: 把常用提示词常驻在输入框上方的一排胶囊，点一下填进输入框；带 {{变量}} 的会先让你填，填完再插入。
+  en: Turn your recurring one-liners into capsules above the composer. They reorder themselves by how often you use them, and ask you to fill in {{placeholder}} values before the snippet lands in the draft. Clicking appends rather than replaces, so a half-written draft survives. A drawer adds search, grouping and editing, and everything lives in a Host-side JSON file you can edit by hand.
+  zh: 把每次都得重打的那几句话做成输入框上方的胶囊。它们按使用次数自动重排，带 {{占位符}} 的会先弹框让你填，填完才插入草稿。点击是追加而不是替换，写到一半的草稿不会被冲掉。抽屉里可以搜索、分组、编辑，数据存在 Host 侧 JSON 文件里，可以直接手改。
 icon: https://raw.githubusercontent.com/xuguangyao/dsh-prompt-deck/main/assets/icon.png
