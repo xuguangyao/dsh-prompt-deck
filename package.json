@@ -21,6 +21,10 @@
   "bugs": {
     "url": "https://github.com/xuguangyao/dsh-prompt-deck/issues"
   },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "exports": {
     ".": "./index.js",
     "./client": "./client.js",
