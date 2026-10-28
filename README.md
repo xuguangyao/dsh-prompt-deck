@@ -17,7 +17,9 @@
 
 ## 安装
 
-从源码安装：
+已在 npm 发布为 `@xgy-lab/dsh-prompt-deck`。在 DSH 左侧栏的「插件」页选「安装 bundle」，填这个包名即可。
+
+也可以从源码安装：
 
 1. `git clone https://github.com/xuguangyao/dsh-prompt-deck`
 2. 打开 DSH 左侧栏的「插件」页，选「安装本地插件 / bundle」，填入 clone 下来的目录
