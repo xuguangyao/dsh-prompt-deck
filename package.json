@@ -36,7 +36,8 @@
     "icon.svg",
     "assets/*.png",
     "screenshots.json",
-    "README.md"
+    "README.md",
+    "DEVELOPING.md"
   ],
   "dsh": {
     "manifestVersion": 1,

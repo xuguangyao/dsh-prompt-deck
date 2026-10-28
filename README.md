@@ -1,46 +1,47 @@
-# 提示词牌组 · dsh-prompt-deck
+# 提示词牌组
 
-把常用提示词做成输入框正上方的一排胶囊，点一下就把内容填进输入框。带 `{{占位符}}` 的会先让你填，填完再插入。
+把常用的那几句话做成 DeepSeek Harness 输入框上方的一排胶囊，点一下就填进输入框。
 
-零依赖、零构建：`index.js` 在 Node 侧跑，`client.js` 在浏览器侧跑，两个都是手写文件，没有编译步骤。
+每天都要重复敲的句子——「先给方案再动手」「帮我看看这个项目的结构」「这个报错帮我定位原因」——每次都得重新组织一遍措辞。这个插件把它们变成一排按钮，连带着占位符，让你只填每次变化的那部分。
 
-## 文件结构
+## 功能
 
-| 文件 | 作用 |
-| --- | --- |
-| `package.json` | 清单。`dsh.bundle.patch` 指向补丁文件，`dsh.client` 声明浏览器侧入口 |
-| `cordis.patch.yml` | 补丁：往 profile 的插件树里插一行，指向本包 |
-| `index.js` | Host 半：读写 `snippets.json`，开 4 个 HTTP 接口 |
-| `client.js` | Client 半：胶囊行、抽屉、编辑器、变量弹窗 |
-| `locale/zh.json` | 插件列表里显示的名字和描述 |
-| `icon.svg` | 插件列表里的图标 |
+- **常驻胶囊**：最常用的 6 条一直摆在输入框上方，按使用次数和最近使用时间排序
+- **一键填入**：点胶囊把内容写进当前草稿；草稿里已经有字就另起一行追加，不会覆盖
+- **占位符**：内容里写 `{{关注点}}` 这样的标记，插入前会弹框让你逐个填；留空则保留原样
+- **抽屉**：点胶囊行尾部的 `＋` 打开，支持搜索、按分组浏览（全部 / 代码 / 写作 / 分析 / 我的）
+- **增删改**：抽屉里每条都能插入、编辑、删除，删除有二次确认
+- **数据在本地**：所有内容就是一个 JSON 文件，可以自己编辑、备份、同步
 
 ## 安装
 
-在 DSH 的 Web 界面打开左侧栏「插件」页，选「安装本地插件 / bundle」，填入本目录的绝对路径：
+从源码安装：
 
-```
-D:\aiworkplace\deepseek-workplace\dsh-prompt-deck
-```
+1. `git clone https://github.com/xuguangyao/dsh-prompt-deck`
+2. 打开 DSH 左侧栏的「插件」页，选「安装本地插件 / bundle」，填入 clone 下来的目录
+3. 返回结果里 `application` 字段为 `applied` 表示已生效；新建一个会话，输入框上方就会出现胶囊行
 
-装完看返回里的 `application` 字段：`applied` 表示已经生效。新建一个会话，输入框上方就会出现胶囊行。
+装完如果胶囊行没出现，先刷新页面（Ctrl+F5）。
 
 ## 使用
 
-- **点胶囊**：内容直接填进当前输入框（草稿里已有字时另起一行追加）。
-- **点最后一个 `＋`**：打开牌组抽屉，里面有搜索、分组、新建。
-- 每条卡片右侧 `[插入]` 和 `⋯`（编辑 / 复制一份 / 删除）。
-- 新建时在内容里写 `{{关注点}}`，保存后卡片上会标出识别到的占位符。
+- **点胶囊**：内容进输入框。带占位符的会先弹框。
+- **点 `＋`**：打开抽屉。搜索框可以按标题和内容过滤，上面的 tab 按分组筛选。
+- **新建 / 编辑**：抽屉里的「＋ 新建」；改某一条点它右侧的 `⋯`。
+- **占位符**：新建时在内容里写 `{{变量名}}`，保存后卡片上会标出识别到的占位符。
+- **关闭抽屉**：按 `Esc` 或点面板外的空白处。
 
 ## 数据存在哪
 
 ```
-%USERPROFILE%\.dsh\prompt-deck\snippets.json
+~/.dsh/prompt-deck/snippets.json
 ```
 
-就是一个普通 JSON 文件，可以直接看、直接备份、直接手改（改完刷新页面）。
+Windows 上对应 `%USERPROFILE%\.dsh\prompt-deck\snippets.json`。
 
-想换位置，在 `cordis.patch.yml` 的 `config` 里加 `dataDir`：
+就是一个普通 JSON 数组，可以直接看、直接备份、直接手改，改完刷新页面即可。
+
+想换存放位置，在 profile 的 `cordis.patch.yml` 里给这一行加 `config.dataDir`：
 
 ```yaml
 - insert:
@@ -50,30 +51,14 @@ D:\aiworkplace\deepseek-workplace\dsh-prompt-deck
         dataDir: D:/work/prompt-deck
 ```
 
-## 开发笔记
+注意这一行 `config` 是整体替换的，改的时候别把其他字段漏掉。
 
-三个当时踩过的点，改代码时容易再踩一次：
+## 兼容性
 
-1. **`dsh.client` 里的 `inject` 只是排队顺序**，不是"允许 import"。Client 端不允许 `require` 任何 `@deepseek-ai/dsh-client-*` 包，React 来自宿主的模块表，直接 `require('react')` 即可。
-2. **会话内的 slot 要拿 sessionId，写 `inject: (sessionId) => ({ sessionId })`**，别指望 slot props。`conversation.composer.dock` 传的是空对象；`conversation.input.dock` 传的是 `{ session, input }`，但用 inject 更稳，换挂载点也不用改。
-3. **往输入框写字不要自己找 textarea**。走 `conversation.input.shell(sessionId).setDraft(text)`，宿主换布局也不用跟着改。
+在 DSH `0.2.1-rc.3` 上开发和验证。
 
-## 挂载点为什么从 composer.dock 换成 input.dock
+插件只用到两个公开面：`conversation.input.dock` 这个挂载点，以及 `conversation.input.shell(sessionId).setDraft(text)` 往输入框写字。没有 `require` 任何宿主 UI 包，样式只用 `--dsw-alias-*` 主题变量，所以明暗主题都会自动跟随。宿主改版时最坏的情况是胶囊行不再出现，不会影响会话本身。
 
-一开始挂在 `conversation.composer.dock`（输入框**下**沿）。那个容器的 CSS 是 `display:flex` 且没有 `flex-wrap`，宿主还在同一个容器里硬编码了 ContextMeter（缓存命中 / 上下文占比），于是两边只能挤在一行。
+## 开发
 
-`conversation.input.dock` 在输入框**上**沿，父容器 `composerStack` 是 `flex-direction:column`，天然一行一个。宿主的 todo 面板（`order: 0`）和排队消息（`order: 20`）也挂这儿，本插件用 `order: 30` 排在它们之后、紧贴输入框。注意这个 slot 只在有会话时渲染（`zone` 为 `undefined` 时整块不渲染），空会话首页看不到胶囊行。
-
-样式只用了 `--dsw-alias-*` 主题变量，没有写死颜色，明暗主题都能自动跟随。
-
-## 发布到市场
-
-`awesome-entry.yml` 是待提交的市场条目，`assets/icon.png` 是市场卡片用的位图（市场只收位图，拒收 SVG，所以从 `icon.svg` 单独渲染了一张 512px 的）。
-
-1. 推到 `github.com/xuguangyao/dsh-prompt-deck`（仓库公开），给仓库加 topic `dsh-plugin`。
-2. 确认 `package.json` 里有 `dsh.bundle.patch` —— 这是硬门槛，只声明 `dsh.client` 的包装不上，也是最常见的被拒原因。
-3. 可选：`npm publish --access public` 发布 `@xgy/dsh-prompt-deck`。不发 npm 也能被收录，`repository` 字段已经指回仓库。发之前确认 npm 上 `@xgy` 这个 scope 属于自己。
-4. 把 `awesome-entry.yml` 复制到 awesome-dsh-plugin 仓库的 `data/plugins/xuguangyao__dsh-prompt-deck.yml`，提一个只包含这一个文件的 PR。**不要改那两个 README**，它们是脚本生成的，手改会让 CI 报 `READMEs are out of sync`。
-5. 等 CI（条目数 ≤3 → `dsh.bundle` → 仓库满 1 天 → lint 与站点构建）和人工评审。CI 失败会指明改什么，同一分支推修复即可。
-
-想加截图：在仓库根放 `screenshots.json`，列 1 到 8 张相对路径图片，市场详情页会展示；不放则从 README 抽图。
+文件结构、踩过的坑、挂载点的选择理由、发布到市场的流程，都放在 [DEVELOPING.md](DEVELOPING.md)。
