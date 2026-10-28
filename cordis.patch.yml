@@ -1,0 +1,14 @@
+# 这个文件是"组合补丁"：profile 会把它合并进启动时的插件树。
+#
+# insert 表示"追加一行"（而不是覆盖已有行）。
+#   id     —— 这一行的唯一标识，改了等于换一个插件行
+#   name   —— 指向本包（package.json 的 name），DSH 用它去解析 Host 入口
+#   config —— 传给 apply(ctx, config) 的第二个参数
+#
+# 想改数据文件存放位置时，把 config 换成：
+#   config:
+#     dataDir: D:/somewhere/prompt-deck
+- insert:
+    - id: prompt-deck
+      name: '@xgy/dsh-prompt-deck'
+      config: {}

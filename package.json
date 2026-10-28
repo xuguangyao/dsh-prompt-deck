@@ -1,0 +1,55 @@
+{
+  "name": "@xgy/dsh-prompt-deck",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Reusable prompt snippets as one-click capsules above the composer. 把常用提示词做成输入框上方的胶囊，一点就填进输入框。",
+  "license": "MIT",
+  "author": "xuguangyao",
+  "keywords": [
+    "dsh-plugin",
+    "dsh",
+    "deepseek-harness",
+    "prompt",
+    "snippets",
+    "composer"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xuguangyao/dsh-prompt-deck.git"
+  },
+  "homepage": "https://github.com/xuguangyao/dsh-prompt-deck#readme",
+  "bugs": {
+    "url": "https://github.com/xuguangyao/dsh-prompt-deck/issues"
+  },
+  "exports": {
+    ".": "./index.js",
+    "./client": "./client.js",
+    "./locale/*.json": "./locale/*.json",
+    "./icon": "./icon.svg",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "index.js",
+    "client.js",
+    "cordis.patch.yml",
+    "locale/*.json",
+    "icon.svg",
+    "assets/*.png",
+    "screenshots.json",
+    "README.md"
+  ],
+  "dsh": {
+    "manifestVersion": 1,
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "immediately": true,
+      "inject": [
+        "@deepseek-ai/dsh-client-locale",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  }
+}

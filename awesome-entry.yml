@@ -1,0 +1,16 @@
+# 提给 awesome-dsh-plugin 的条目。
+#
+# 用法：把本文件复制到 awesome-dsh-plugin 仓库的
+#   data/plugins/xuguangyao__dsh-prompt-deck.yml
+# 然后提一个只包含这一个文件的 PR。不要动那两个 README（它们是生成的）。
+#
+# 前提：github.com/xuguangyao/dsh-prompt-deck 已公开，package.json 里有 dsh.bundle，
+# 仓库加了 topic `dsh-plugin`，且仓库创建满 1 天。
+
+url: https://github.com/xuguangyao/dsh-prompt-deck
+name: xuguangyao/dsh-prompt-deck
+category: ui
+description:
+  en: Reusable prompt snippets pinned above the composer as one-click capsules; clicking one fills the input, resolving {{variable}} placeholders first.
+  zh: 把常用提示词常驻在输入框上方的一排胶囊，点一下填进输入框；带 {{变量}} 的会先让你填，填完再插入。
+icon: https://raw.githubusercontent.com/xuguangyao/dsh-prompt-deck/main/assets/icon.png
