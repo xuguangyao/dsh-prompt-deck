@@ -1,6 +1,6 @@
 {
   "name": "@xgy-lab/dsh-prompt-deck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "description": "Reusable prompt snippets as one-click capsules above the composer. 把常用提示词做成输入框上方的胶囊，一点就填进输入框。",
   "license": "MIT",

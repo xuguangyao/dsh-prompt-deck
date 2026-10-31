@@ -724,6 +724,8 @@ window.__ModuleLoader__.load({
 .pd-btn:hover { background:var(--dsw-alias-bg-layer-2); }
 .pd-btn:disabled { opacity:.5; cursor:default; }
 .pd-btn-primary { background:var(--dsw-alias-brand-primary); border-color:transparent; color:#fff; }
+.pd-btn-primary:hover { background:var(--dsw-alias-brand-primary); filter:brightness(.93); }
+.pd-btn-primary:disabled { background:var(--dsw-alias-brand-primary); }
 .pd-menu { position:absolute; right:8px; top:calc(100% - 4px); z-index:5; min-width:150px; padding:4px; border-radius:10px; border:1px solid var(--dsw-alias-border-l1); background:var(--dsw-alias-bg-layer-1); box-shadow:0 10px 28px rgba(0,0,0,.2); }
 .pd-menu-item { display:block; width:100%; text-align:left; padding:5px 8px; border:0; border-radius:6px; background:transparent; color:var(--dsw-alias-label-primary); font-size:12px; cursor:pointer; }
 .pd-menu-item:hover { background:var(--dsw-alias-bg-layer-2); }
@@ -731,7 +733,7 @@ window.__ModuleLoader__.load({
 .pd-menu-confirm { margin-top:2px; padding-top:2px; border-top:1px solid var(--dsw-alias-border-l1); }
 .pd-empty { padding:28px 12px; text-align:center; font-size:12px; color:var(--dsw-alias-label-tertiary); }
 .pd-error { margin:8px 12px 0; padding:6px 10px; border-radius:8px; background:var(--dsw-alias-bg-layer-2); color:var(--dsw-alias-state-error-primary); font-size:12px; }
-.pd-dialog { width:min(420px,calc(100vw - 32px)); display:flex; flex-direction:column; gap:10px; padding:16px; background:var(--dsw-alias-bg-layer-1); border:1px solid var(--dsw-alias-border-l1); border-radius:14px; box-shadow:0 18px 48px rgba(0,0,0,.3); }
+.pd-dialog { width:min(420px,calc(100vw - 32px)); max-height:calc(100vh - 32px); overflow-y:auto; display:flex; flex-direction:column; gap:10px; padding:16px; background:var(--dsw-alias-bg-layer-1); border:1px solid var(--dsw-alias-border-l1); border-radius:14px; box-shadow:0 18px 48px rgba(0,0,0,.3); }
 .pd-dialog-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:4px; }
 .pd-form { padding:12px; overflow-y:auto; display:flex; flex-direction:column; gap:10px; }
 .pd-field { display:flex; flex-direction:column; gap:4px; }
